@@ -27,6 +27,7 @@ static int ls_flashing_half_period = 0;
 static char ls_flashing_color_on = 0x00;
 static char ls_flashing_color_off = 0x00; 
 
+/*thread that flashes the LED in a loop*/
 void* led_strip_flash(void* param);
 
 /**
@@ -38,8 +39,7 @@ void setup_mindbx(void)
 	  int i ;
 
 	  /*check if root*/
-	  if (geteuid () != 0)
-	  {
+	  if (geteuid () != 0){
 			fprintf (stderr, "mindbx need to be root to run\n") ;
 			exit (0) ;
 	  }
@@ -63,7 +63,7 @@ void setup_mindbx(void)
 }
 
 /**
- * wait_for_coin_insertion(void)
+ * void wait_for_coin_insertion(void)
  * @brief blocking call that waits for coin insertion
  */
 void wait_for_coin_insertion(void)
@@ -80,7 +80,7 @@ void wait_for_coin_insertion(void)
 }
 
 /**
- * wait_for_test_button(void)
+ * void wait_for_test_button(void)
  * @brief blocking call that waits for the test button
  */
 void wait_for_test_button(void)
@@ -123,22 +123,23 @@ void set_led_strip_color(char rgb)
  */
 void open_door(void)
 {
-
   /*open the door*/
   digitalWrite(SOLENOID, 1);
   printf ("Door opened!\n");
   delay(5000);
   digitalWrite(SOLENOID, 0);
-
 }
 
 /**
- * set_led_strip_flash_state(void)
- * @brief 
- * @param 
+ * void set_led_strip_flash_state(char rgb_on, char rgb_off, int half_period)
+ * @brief sets the led strip in an alternating flash state
+ * @param rgb_on, color for the on state
+ * @param rgb_off, color for the off state
+ * @param half_period, half-period of the flash cycle
  */
 void set_led_strip_flash_state(char rgb_on, char rgb_off, int half_period){
 
+	/**/
 	pthread_t thread;
 	pthread_attr_t attr;
 	

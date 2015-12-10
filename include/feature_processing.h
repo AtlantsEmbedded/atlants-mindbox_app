@@ -4,7 +4,8 @@
 #include "feature_structure.h"
 #include "feature_input.h"
 
-
+/*feature processing structure*/
+/*contains options and data*/
 typedef struct feat_proc_s{
 	
 	/*to be set before init*/
@@ -21,7 +22,7 @@ typedef struct feat_proc_s{
 }feat_proc_t; 
 
 int init_feat_processing(feat_proc_t* feature_proc);
-void train_feat_processing(feat_proc_t* feature_proc);
+int train_feat_processing(feat_proc_t* feature_proc);
 int get_normalized_sample(feat_proc_t* feature_proc);
 int clean_up_feat_processing(feat_proc_t* feature_proc);
 

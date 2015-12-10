@@ -36,5 +36,4 @@ typedef struct feature_input_s{
 
 int init_feature_input(char input_type, feature_input_t* feature_input);
 
-
 #endif

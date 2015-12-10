@@ -1,4 +1,11 @@
-
+/**
+ * @file feature_input.c
+ * @author Frederic Simard (fred.simard@atlantsembedded.com) | Atlants Embedded
+ * @brief Implements the abstract representation for the feature input.
+ * 		  function pointers can then be linked with shared memory, fake input or any other
+ * 		  defined modality.
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +28,7 @@ int init_feature_input(char input_type, feature_input_t* feature_input){
 	_WAIT_FEAT_FC = NULL;
 	_TERMINATE_FEAT_INPUT_FC = NULL;
 
+	/*this is the shared memory input*/
 	if(input_type == SHM_INPUT) {
 		
 		printf("Input source: SHM\n");
@@ -29,6 +37,7 @@ int init_feature_input(char input_type, feature_input_t* feature_input){
 		_WAIT_FEAT_FC = &shm_rd_wait_for_request_completed;
 		_TERMINATE_FEAT_INPUT_FC = &shm_rd_cleanup;
 	}
+	/*this is the fake input*/
 	else if(input_type == FAKE_INPUT){
 		printf("Input source: FAKE\n");
 		_INIT_FEAT_INPUT_FC = &fake_feat_gen_init;
@@ -40,6 +49,7 @@ int init_feature_input(char input_type, feature_input_t* feature_input){
 		fprintf(stderr, "Unknown input type\n");
 		return EXIT_FAILURE;
 	}
+	/*init and return the object*/
 	return INIT_FEAT_INPUT_FC(feature_input);
 	
 }
